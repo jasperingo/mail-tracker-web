@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+  .auth-form {
+    @apply p-10 rounded-lg shadow lg:w-[80rem] lg:mx-auto;
+  }
+  
+}
