@@ -1,3 +1,6 @@
+import { type Letter } from "~/models/letter.model";
+import { type Role } from "~/models/role.model";
+
 export class User {
   id!: number;
 
@@ -15,5 +18,9 @@ export class User {
 
   isAdmin!: boolean;
 
-  createdAt!: Date;
+  createdAt!: string;
+
+  roles!: Role[];
+
+  letters!: Letter[];
 }

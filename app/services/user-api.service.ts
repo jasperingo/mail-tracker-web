@@ -16,4 +16,8 @@ export const UserApiService = {
   ): Promise<User> {
     return HttpService.mutate(this.getPath(), 'POST', form);
   },
+
+  read(accessToken: string): Promise<User[]> {
+    return HttpService.get(this.getPath(), accessToken);
+  },
 }
