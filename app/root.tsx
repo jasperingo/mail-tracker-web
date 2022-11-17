@@ -7,11 +7,13 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { ToastContainer } from 'react-toastify';
+import toastStyle from 'react-toastify/dist/ReactToastify.css';
 import styles from "./styles/tailwindcss.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
-  // { rel: "stylesheet", href: toastStyle },
+  { rel: "stylesheet", href: toastStyle },
 ];
 
 export const meta: MetaFunction = () => ({
@@ -29,6 +31,7 @@ export default function App() {
       </head>
       <body>
         <Outlet />
+        <ToastContainer />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

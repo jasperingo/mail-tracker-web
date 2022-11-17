@@ -1,18 +1,59 @@
-import { type ActionFunction } from '@remix-run/node';
-import { Form } from "@remix-run/react";
+import { json, type LoaderFunction } from "@remix-run/node";
+import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react";
+import { useEffect } from 'react';
 import { IoMailUnread } from "react-icons/io5";
+import { toast } from 'react-toastify';
 import { InputComponent } from "~/components/forms/input.component";
 import { SubmitButtonComponent } from '~/components/forms/submit-button.component';
 import { H3Component } from '~/components/headers/h3.component';
 import { HomeNavItemComponent } from "~/components/list-items/home-nav-item.component";
 import { HomeStepsItem } from '~/components/list-items/home-steps-item.component';
 import { TemplateItemComponent } from '~/components/list-items/template-item.component';
+import { CenterBlurLoaderComponent } from "~/components/loaders/center-blur-loader.component";
+import { serverSession } from "~/server/session.server";
 
-export const action: ActionFunction = async ({ request }) => {}
+type LoaderData = {
+  errors: {
+    signIn: string;
+  };
+};
+
+type ActionData = {
+  email?: string;
+  password?: string;
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await serverSession.getSession(request);
+
+  const data: LoaderData = { 
+    errors: {
+      signIn: session.get('signInError'),
+    }
+  };
+
+  return json(data, {
+    headers: await serverSession.commitSession(session),
+  });
+}
 
 export default function Index() {
+  const data = useActionData<ActionData>();
+  
+  const transition = useTransition();
+
+  const { errors } = useLoaderData<LoaderData>();
+
+  useEffect(() => { 
+   if (transition.state === 'idle' && errors.signIn !== undefined) { 
+      toast.error(errors.signIn);
+    }
+  }, [errors.signIn, transition.state]);
+
   return (
     <div>
+      <CenterBlurLoaderComponent />
+
       <header className="border-b py-4">
         <div className="container flex items-center gap-x-2">
           <IoMailUnread className="text-3xl text-orange-600 lg:text-4xl" />
@@ -20,7 +61,7 @@ export default function Index() {
           <nav className="flex-grow flex justify-end sr-only md:not-sr-only">
             <ul className="flex w-fit gap-x-4">
               <HomeNavItemComponent text="Sign in" to="#sign-in" />
-              <HomeNavItemComponent text="Sign up" to="#sign-up" />
+              <HomeNavItemComponent text="Steps" to="#steps" />
               <HomeNavItemComponent text="Templates" to="#templates" />
             </ul>
           </nav>
@@ -33,17 +74,18 @@ export default function Index() {
           <section className="py-4 lg:py-12 lg:flex lg:gap-x-8">
             <div className="py-8">
               <h2 className="text-orange-600 text-4xl lg:text-6xl">An application for templating, sending, tracking and signing letters.</h2>
+              <div className="py-4 text-gray-600 font-bold">For Federal University of Technology Owerri.</div>
             </div>
             
             <Form
               id="sign-in"
               method="post" 
               className="auth-form" 
-              action=""
+              action="sign-in"
             >
-              <fieldset>
+              <fieldset disabled={transition.state !== 'idle'}>
 
-                <InputComponent id="sign-in-email-input" label="Email" name="email" type="email" />
+                <InputComponent id="sign-in-email-input" label="Email" name="email" type="email" value={data?.email} />
 
                 <InputComponent id="sign-in-password-input" label="Password" name="password" type="password" />
 
@@ -55,31 +97,18 @@ export default function Index() {
 
           <section className="py-8 lg:flex lg:gap-x-8">
 
-            <Form
-              id="sign-up"
-              method="post" 
-              className="auth-form" 
-              action=""
-            >
-              <fieldset>
+            <div>
+              <img 
+                src="/images/typewriter.jpg" 
+                alt="A typewriter" 
+                className="w-full h-96 lg:w-[80em] shadow shadow-color-primary rounded-lg" 
+              />
+            </div>
 
-                <InputComponent id="sign-up-first-name-input" label="Email" name="firstName" />
-
-                <InputComponent id="sign-up-last-name-input" label="Email" name="lastName" />
-
-                <InputComponent id="sign-up-email-input" label="Email" name="email" type="email" />
-
-                <InputComponent id="sign-up-password-input" label="Password" name="password" type="password" />
-
-                <SubmitButtonComponent text="Sign up" />
-
-              </fieldset>
-            </Form>
-
-           <div className="py-4 lg:w-[80rem]">
+           <div className="py-4 lg:w-[80rem]" id="steps">
             <H3Component text="How it works" />
             <ul>
-                <HomeStepsItem step={1} text="Sign up" />
+                <HomeStepsItem step={1} text="Sign in" />
                 <HomeStepsItem step={2} text="Find a template" />
                 <HomeStepsItem step={3} text="Add the letter recipients" />
                 <HomeStepsItem step={4} text="Add the letter values" />

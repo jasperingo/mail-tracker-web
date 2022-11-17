@@ -8,4 +8,7 @@
     @apply p-10 rounded-lg shadow lg:w-[80rem] lg:mx-auto;
   }
   
+  .bg-gray-blur {
+    background-color: rgba(184, 178, 178, 0.5);
+  }
 }
