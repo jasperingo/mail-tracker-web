@@ -38,7 +38,7 @@ export const InputComponent = ({
         required={required}
         defaultValue={value}
         placeholder={placeholder}
-        className="block w-full p-2 border border-orange-600 rounded-lg outline-none disabled:bg-gray-200" 
+        className="block w-full p-2 border border-orange-600 rounded-lg outline-none bg-white disabled:bg-gray-200" 
       />
       <div className="text-red-500">{ error }</div>
     </div>

@@ -8,11 +8,8 @@ export const RoleApiService = {
 
   async create(
     form: { 
-      firstName?: string; 
-      lastName?: string; 
       title?: string; 
-      password?: string; 
-      matriculationNumber?: string;
+      userId?: number; 
     },
     accessToken: string
   ): Promise<Role> {
