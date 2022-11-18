@@ -4,7 +4,6 @@ export const TableComponent = <T,>(
   { caption, items, headings, emptyText, render }: 
   { caption?: string; headings: string[]; items: T[], emptyText: string; render(item: T): ReactNode; }
 ) => {
-
   return (
     <div className="bg-white overflow-auto rounded-lg p-4 shadow shadow-orange-400">
       <table className="w-full">
@@ -31,7 +30,7 @@ export const TableComponent = <T,>(
           { 
             items.length > 0 ? items.map(render) : (
               <tr>
-                <td colSpan={headings.length} className="text-center p-4 font-bold">{ emptyText }</td>
+                <td colSpan={headings.length} className="border text-center p-4 font-bold">{ emptyText }</td>
               </tr>
             )
           }

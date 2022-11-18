@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 }
 
-const HEADING = ['ID', 'Title', 'First name', 'Last name', 'email', 'Matriculation number'];
+const HEADING = ['ID', 'Title', 'First name', 'Last name', 'email', 'Matriculation number', 'Joined on'];
 
 export default function Users() {
   const data = useLoaderData<LoaderData>();

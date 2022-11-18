@@ -9,7 +9,7 @@ export const UserTableRowComponent = ({ user }: { user: User }) => {
       <td className="p-4">{ user.lastName }</td>
       <td className="p-4">{ user.email }</td>
       <td className="p-4">{ user.matriculationNumber ?? '(No matriculation number)' }</td>
-      {/* <td className="p-4">{ user.createdAt }</td> */}
+      <td className="p-4">{ new Date(user.createdAt).toUTCString() }</td>
     </tr>
   );
 }
