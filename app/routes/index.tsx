@@ -6,13 +6,17 @@ import { toast } from 'react-toastify';
 import { InputComponent } from "~/components/forms/input.component";
 import { SubmitButtonComponent } from '~/components/forms/submit-button.component';
 import { H3Component } from '~/components/headers/h3.component';
+import { DualListComponent } from "~/components/list-items/dual-list.component";
 import { HomeNavItemComponent } from "~/components/list-items/home-nav-item.component";
 import { HomeStepsItem } from '~/components/list-items/home-steps-item.component';
 import { TemplateItemComponent } from '~/components/list-items/template-item.component';
 import { CenterBlurLoaderComponent } from "~/components/loaders/center-blur-loader.component";
+import { type Template } from "~/models/template.model";
 import { serverSession } from "~/server/session.server";
+import { TemplateApiService } from "~/services/template-api.service";
 
 type LoaderData = {
+  templates: Template[];
   errors: {
     signIn: string;
   };
@@ -26,15 +30,26 @@ type ActionData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await serverSession.getSession(request);
 
-  const data: LoaderData = { 
-    errors: {
-      signIn: session.get('signInError'),
-    }
-  };
+  try {
+    const templates = await TemplateApiService.read();
 
-  return json(data, {
-    headers: await serverSession.commitSession(session),
-  });
+    const data: LoaderData = { 
+      templates,
+      errors: {
+        signIn: session.get('signInError'),
+      }
+    };
+
+    return json(data, {
+      headers: await serverSession.commitSession(session),
+    });
+  } catch (error: any) {
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      throw new Response('Error', { status: error.status });
+    }
+  }
 }
 
 export default function Index() {
@@ -42,7 +57,7 @@ export default function Index() {
   
   const transition = useTransition();
 
-  const { errors } = useLoaderData<LoaderData>();
+  const { errors, templates } = useLoaderData<LoaderData>();
 
   useEffect(() => { 
    if (transition.state === 'idle' && errors.signIn !== undefined) { 
@@ -123,12 +138,11 @@ export default function Index() {
 
             <H3Component text="Templates" />
 
-            <ul className="lg:flex lg:flex-wrap lg:gap-x-8">
-              <TemplateItemComponent text="Missing result" />
-              <TemplateItemComponent text="Missing practical" />
-              <TemplateItemComponent text="Missing practical v2" />
-            </ul>
-
+            <DualListComponent 
+              items={templates} 
+              emptyText="No template" 
+              render={(t) => <TemplateItemComponent to="#sign-in" template={t} key={t.id} />} 
+            />
           </section>
 
         </div>
