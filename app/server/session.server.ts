@@ -20,5 +20,9 @@ export const serverSession = {
     };
   },
 
-  destroySession 
+  async destroySession(session: Session) {
+    return {
+      'Set-Cookie': await destroySession(session),
+    };
+  }
 };
