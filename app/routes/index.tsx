@@ -85,9 +85,9 @@ export default function Index() {
             >
               <fieldset disabled={transition.state !== 'idle'}>
 
-                <InputComponent id="sign-in-email-input" label="Email" name="email" type="email" value={data?.email} />
+                <InputComponent id="email-input" label="Email" name="email" type="email" value={data?.email} />
 
-                <InputComponent id="sign-in-password-input" label="Password" name="password" type="password" />
+                <InputComponent id="password-input" label="Password" name="password" type="password" />
 
                 <SubmitButtonComponent text="Sign in" />
 
