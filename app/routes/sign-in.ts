@@ -20,7 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
     session.set('userId', response.userId);
     session.set('accessToken', response.accessToken);
 
-    redirectTo = '/account';
+    redirectTo = '/account/templates';
   } catch (error: any) {
     if (error instanceof Error) {
       throw error;
