@@ -8,8 +8,8 @@ export const DualListComponent = <T,>(
     <ul className="lg:flex lg:flex-wrap lg:gap-x-8">
       { 
         items.length > 0 ? items.map(render) : (
-          <li>
-            <div className="border text-center p-4 font-bold">{ emptyText }</div>
+          <li className="w-full">
+            <div className="border rounded-lg text-center p-4 font-bold">{ emptyText }</div>
           </li>
         )
       }

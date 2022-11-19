@@ -1,3 +1,4 @@
+import { type Letter } from "~/models/letter.model";
 import { type User } from "~/models/user.model";
 import HttpService from "~/services/http.service";
 
@@ -33,5 +34,9 @@ export const UserApiService = {
 
   readOne(id: number, accessToken: string): Promise<User> {
     return HttpService.get(this.getPath(id), accessToken);
+  },
+
+  readLetters(id: number, accessToken?: string): Promise<Letter[]> {
+    return HttpService.get(this.getPath(`${id}/letters`), accessToken);
   },
 }
