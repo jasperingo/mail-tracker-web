@@ -1,6 +1,6 @@
 import { type TemplateVariable } from "~/models/template-variable.model";
 
-export const TemplateVariableItemComponent = ({ templateVariable }: { templateVariable: TemplateVariable; }) => {
+export const TemplateVariableItemComponent = ({ templateVariable, input }: { templateVariable: TemplateVariable; input?: string; }) => {
   return (
     <li className="lg:w-[45%] mb-4">
       <div className="border p-4 rounded-lg">
@@ -9,6 +9,11 @@ export const TemplateVariableItemComponent = ({ templateVariable }: { templateVa
         {
           templateVariable.databaseField && (
             <div>Database field: { templateVariable.databaseField }</div>
+          )
+        }
+        {
+          input && (
+            <div>Value: { input }</div>
           )
         }
       </div>

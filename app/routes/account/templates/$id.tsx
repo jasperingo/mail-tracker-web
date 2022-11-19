@@ -3,6 +3,9 @@ import { useLoaderData } from "@remix-run/react";
 import { H2Component } from "~/components/headers/h2.component";
 import { DualListComponent } from "~/components/list-items/dual-list.component";
 import { TemplateVariableItemComponent } from "~/components/list-items/template-variable-item.component";
+import { TemplateContentComponent } from "~/components/utils/template-content.component";
+import { TemplateDateComponent } from "~/components/utils/template-date.component";
+import { TemplateTitleComponent } from "~/components/utils/template-title.component";
 import { type Template } from "~/models/template.model";
 import { TemplateApiService } from "~/services/template-api.service";
 
@@ -32,14 +35,15 @@ export default function TemplateView() {
       <H2Component text="Template" />
 
       <div>
-        <h3 className="font-bold mb-2 text-xl text-orange-600">{ template.title }</h3>
-        <div className="mb-4 text-gray-600">{ new Date(template.createdAt).toUTCString() }</div>
+        <TemplateTitleComponent title={template.title} />
 
-        <div className="shadow p-4 rounded-lg mb-8" dangerouslySetInnerHTML={{__html: template.content }}></div>
+        <TemplateDateComponent date={template.createdAt} />
+
+        <TemplateContentComponent content={template.content} />
 
         <DualListComponent 
           items={template.templateVariables} 
-          emptyText="No template variables" 
+          emptyText="No template variable" 
           render={(t) => <TemplateVariableItemComponent templateVariable={t} key={t.id} />} 
         />
       </div>

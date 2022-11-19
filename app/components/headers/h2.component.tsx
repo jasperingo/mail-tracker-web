@@ -10,7 +10,7 @@ export const H2Component = ({ text, links }: { text: string; links?: { text: str
             <li key={item.text}>
               <Link 
                 to={item.to}
-                className="inline-block text-white bg-orange-600 py-4 px-2 rounded-lg hover:bg-orange-400"
+                className="inline-block text-white bg-orange-600 py-2 px-4 rounded-lg hover:bg-orange-400"
               >
                 { item.text }
               </Link>

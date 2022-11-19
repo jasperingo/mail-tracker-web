@@ -23,4 +23,8 @@ export const LetterApiService = {
   readOne(id: number, accessToken?: string): Promise<Letter> {
     return HttpService.get(this.getPath(id), accessToken);
   },
+
+  downloadOne(id: number, accessToken?: string) {
+    return HttpService.getFile(this.getPath(`${id}/download`), accessToken);
+  },
 }

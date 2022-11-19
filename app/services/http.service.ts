@@ -18,6 +18,28 @@ const HttpService = {
     return res.json();
   },
 
+  async getFile(path: string, accessToken?: string) {
+    const headers = new Headers();
+
+    if (accessToken !== undefined) {
+      headers.append('Authorization', `Bearer ${accessToken}`);
+    }
+
+    const res = await fetch(`${process.env.API_URL}${path}`, {
+      headers,
+      method: 'GET',
+    });
+
+    if (!res.ok) {
+      throw await this.error(res);
+    }
+  
+    return {
+      headers: res.headers,
+      body: await res.blob(),
+    }
+  },
+
   async mutate(
     path: string, 
     method: 'PUT' | 'POST' | 'DELETE', 
