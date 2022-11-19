@@ -51,6 +51,11 @@ export default function LetterView() {
 
         <TemplateDateComponent date={letter.createdAt} />
 
+        <div className="mb-4 bg-orange-200 rounded-lg py-1 px-4 w-fit">
+          <span className="font-bold">Sent by: </span>
+          <span>{ letter.user.title } { letter.user.firstName } { letter.user.lastName }</span>
+        </div>
+
         <TemplateContentComponent content={letter.template.content} />
 
         <div>
