@@ -35,4 +35,8 @@ export const LetterApiService = {
   downloadOne(id: number, accessToken?: string) {
     return HttpService.getFile(this.getPath(`${id}/download`), accessToken);
   },
+
+  signLetter(id: number, accessToken?: string): Promise<Letter> {
+    return HttpService.mutate(this.getPath(`${id}/sign`), 'PUT', {}, accessToken);
+  },
 }

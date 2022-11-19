@@ -1,7 +1,12 @@
+import { Form, useTransition } from "@remix-run/react";
 import { IoCheckmarkCircle, IoTime } from "react-icons/io5";
+import { SubmitButtonComponent } from "~/components/forms/submit-button.component";
 import { type Recipient } from "~/models/recipient.model";
+import { type User } from "~/models/user.model";
 
-export const RecipientItemComponent = ({ recipient }: { recipient: Recipient; }) => {
+export const RecipientItemComponent = ({ letterId, recipient, user }: { letterId: number; recipient: Recipient; user: User; }) => {
+  const transition = useTransition();
+
   return (
     <li className="w-fit mb-4">
       <div className="border p-4 rounded-lg flex gap-x-4 items-start">
@@ -23,6 +28,20 @@ export const RecipientItemComponent = ({ recipient }: { recipient: Recipient; })
           {
             recipient.signedAt && (
               <div>Signed on: { new Date(recipient.signedAt).toUTCString() }</div>
+            )
+          }
+
+          {
+            recipient.role.user.id === user.id && recipient.signedAt === null && (
+              <Form
+                action="sign"
+                method="post"
+              >
+                <fieldset disabled={transition.state !== 'idle'}>
+                  <input name="letterId" value={letterId} type="hidden" />
+                  <SubmitButtonComponent text="Sign letter" />
+                </fieldset>
+              </Form>
             )
           }
         </div>
