@@ -114,7 +114,7 @@ export default function CreateRole() {
             name="userId" 
             value={data?.userId} 
             error={errors.userId} 
-            options={users.map((user) => ({ text: `${user.title ?? ''} ${user.firstName} ${user.lastName} (${user.email})`, value: user.id}))} 
+            options={users.map((user) => ({ text: `${user.title ?? ''} ${user.firstName} ${user.lastName} (${user.email})`, value: user.id }))} 
           />
 
           <SubmitButtonComponent text="Create role" />

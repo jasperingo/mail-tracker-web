@@ -41,7 +41,7 @@ export default function LetterView() {
       <H2Component text="Letter" links={[{ text: 'Download', to: 'download' }]}/>
 
       <div>
-        <TemplateTitleComponent title={letter.template.title} />
+        <TemplateTitleComponent title={letter.title} />
 
         <TemplateDateComponent date={letter.createdAt} />
 

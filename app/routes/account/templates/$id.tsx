@@ -32,7 +32,7 @@ export default function TemplateView() {
 
   return (
     <div className="container">
-      <H2Component text="Template" />
+      <H2Component text="Template" links={[{ text: 'Send letter', to: `/account/letters/create?templateId=${template.id}` }]} />
 
       <div>
         <TemplateTitleComponent title={template.title} />

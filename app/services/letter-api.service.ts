@@ -9,7 +9,15 @@ export const LetterApiService = {
   async create(
     form: { 
       title?: string; 
-      content?: string;
+      templateId?: number;
+      recipients?: {
+        roleId?: number;
+        level?: number;
+      }[];
+      letterValues: {
+        value?: string;
+        templateVariableId?: number;
+      }[];
     },
     accessToken: string
   ): Promise<Letter> {

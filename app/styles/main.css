@@ -9,7 +9,7 @@
   }
 
   .create-form {
-    @apply p-10 rounded-lg shadow lg:w-[40rem] lg:mx-auto;
+    @apply mb-8 p-10 rounded-lg shadow lg:w-[40rem] lg:mx-auto;
   }
   
   .bg-gray-blur {

@@ -1,9 +1,9 @@
 import { type LoaderFunction, type ActionFunction, json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react";
 import { useState, useEffect } from "react";
-import { IoAddCircle } from "react-icons/io5";
 import { DefaultEditor } from 'react-simple-wysiwyg';
 import { toast } from 'react-toastify';
+import { InputCollectionComponent } from "~/components/forms/input-collection.component";
 import { InputComponent } from "~/components/forms/input.component";
 import { SubmitButtonComponent } from "~/components/forms/submit-button.component";
 import { TemplateVariableInputComponent } from "~/components/forms/template-variable-input.component";
@@ -57,7 +57,7 @@ export const action: ActionFunction = async ({ request }) => {
   const templateVariablesDatabaseFields = form.getAll('templateVariables[databaseField][]');
 
   try {
-    await TemplateApiService.create({ 
+    const template = await TemplateApiService.create({ 
       title, 
       content, 
       templateVariables: templateVariablesNames.map((name, index) => ({
@@ -67,7 +67,7 @@ export const action: ActionFunction = async ({ request }) => {
       }))
     }, session.get('accessToken'));
 
-    redirectTo = '/account/templates';
+    redirectTo = `/account/templates/${template.id}`;
 
   } catch (error: any) {
     if (error instanceof Error) {
@@ -122,25 +122,14 @@ export default function CreateTemplate() {
 
           <input type="hidden" value={content} name="content" />
 
-          <fieldset className="my-4">
-            <legend className="w-full flex justify-between items-center mb-4">
-              <span className="font-bold">Template variables</span>
-              <button 
-                type="button"
-                onClick={() => setVariables((v) => [...v, v.length])}
-                className="flex gap-x-2 items-center px-2 rounded-lg text-white bg-orange-600 active:bg-orange-400"
-              >
-                <IoAddCircle className="text-xl" />
-                <span>Add variable</span>
-              </button>
-            </legend>
-
-            {
-              variables.map((v) => <TemplateVariableInputComponent key={v} />)
-            }
-            
-            <div className="text-red-500">{ errors.templateVariables }</div>
-          </fieldset>
+          <InputCollectionComponent 
+            collection={variables}
+            title="Template variables"
+            buttonText="Add variable"
+            error={errors.templateVariables}
+            onAddButtonClick={() => setVariables((v) => [...v, v.length])}
+            onRender={(v) => <TemplateVariableInputComponent key={v} />}
+          />
 
           <SubmitButtonComponent text="Create template" />
 

@@ -6,6 +6,8 @@ import { type User } from "~/models/user.model";
 export class Letter {
   id!: number;
 
+  title!: string;
+
   createdAt!: string;
 
   user!: User;
