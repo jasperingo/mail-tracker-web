@@ -1,3 +1,4 @@
+import { type TemplateVariable } from "~/models/template-variable.model";
 import { type Template } from "~/models/template.model";
 import HttpService from "~/services/http.service";
 
@@ -9,7 +10,8 @@ export const TemplateApiService = {
   async create(
     form: { 
       title?: string; 
-      userId?: number; 
+      content?: string; 
+      templateVariables?: Pick<TemplateVariable, 'name' | 'source' | 'databaseField'>[],
     },
     accessToken: string
   ): Promise<Template> {

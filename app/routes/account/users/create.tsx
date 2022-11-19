@@ -68,8 +68,6 @@ export const action: ActionFunction = async ({ request }) => {
       matriculationNumber: matriculationNumber?.length === 0 ? undefined : matriculationNumber,
     }, session.get('accessToken'));
 
-    session.flash('success', 'User account created');
-
     redirectTo = '/account/users';
 
   } catch (error: any) {

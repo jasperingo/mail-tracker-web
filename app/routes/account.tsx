@@ -1,7 +1,7 @@
 import { type LoaderFunction, redirect } from "@remix-run/node";
 import { Link, Outlet } from "@remix-run/react";
 import { useState } from "react";
-import { IoMailUnread, IoNewspaper, IoPerson, IoPersonAdd, IoBagCheck, IoBagAdd, IoMenu, IoClose } from "react-icons/io5";
+import { IoMailUnread, IoNewspaper, IoAdd, IoPerson, IoPersonAdd, IoBagCheck, IoBagAdd, IoMenu, IoClose } from "react-icons/io5";
 import { AccountNavItemComponent } from "~/components/list-items/account-nav-item.component";
 import { CenterBlurLoaderComponent } from "~/components/loaders/center-blur-loader.component";
 import { serverSession } from "~/server/session.server";
@@ -53,6 +53,7 @@ export default function Account() {
           <nav className={`fixed z-20 overflow-y-auto w-64 left-0 bg-white lg:static lg:w-52 ${showNav ? 'left-0' : '-left-full'}`}>
             <ul className="px-4 py-8 lg:px-0">
               <AccountNavItemComponent Icon={IoNewspaper} text="Templates" to="templates" />
+              <AccountNavItemComponent Icon={IoAdd} text="Create template" to="templates/create" />
               <AccountNavItemComponent Icon={IoPerson} text="Users" to="users" />
               <AccountNavItemComponent Icon={IoPersonAdd} text="Create user" to="users/create" />
               <AccountNavItemComponent Icon={IoBagCheck} text="Roles" to="roles" />

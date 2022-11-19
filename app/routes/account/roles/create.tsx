@@ -65,10 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
   try {
     await RoleApiService.create({ userId, title }, session.get('accessToken'));
 
-    session.flash('success', 'User account created');
-
     redirectTo = '/account/roles';
-
   } catch (error: any) {
     if (error instanceof Error) {
       throw error;
