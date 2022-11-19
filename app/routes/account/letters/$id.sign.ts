@@ -16,10 +16,11 @@ export const action: ActionFunction = async ({ request }) => {
     redirectTo = `/account/letters/${letterId}`;
 
   } catch (error: any) {
+    console.log(error)
     if (error instanceof Error) {
       throw error;
     } else {
-      session.flash('formError', 'Oops! An error occured.');
+      throw new Response('Error', { status: error.status });
     }
   }
 

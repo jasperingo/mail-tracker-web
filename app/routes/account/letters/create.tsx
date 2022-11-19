@@ -143,7 +143,7 @@ export default function CreateLetter() {
       <H2Component text="Send letter" />
 
       <div className="lg:flex gap-x-4 lg:justify-center">
-        <div>
+        <div className="lg:w-[30rem]">
           <TemplateTitleComponent title={template.title} />
 
           <TemplateDateComponent date={template.createdAt} />

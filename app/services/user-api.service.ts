@@ -1,4 +1,5 @@
 import { type Letter } from "~/models/letter.model";
+import { type Role } from "~/models/role.model";
 import { type User } from "~/models/user.model";
 import HttpService from "~/services/http.service";
 
@@ -34,6 +35,10 @@ export const UserApiService = {
 
   readOne(id: number, accessToken: string): Promise<User> {
     return HttpService.get(this.getPath(id), accessToken);
+  },
+
+  readRoles(id: number, accessToken?: string): Promise<Role[]> {
+    return HttpService.get(this.getPath(`${id}/roles`), accessToken);
   },
 
   readLetters(id: number, accessToken?: string): Promise<Letter[]> {

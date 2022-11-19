@@ -77,7 +77,7 @@ export default function LetterView() {
           <ListComponent 
             items={letter.recipients} 
             emptyText="No recipient" 
-            render={(r) => <RecipientItemComponent key={r.id} letterId={letter.id} recipient={r} user={user} />} 
+            render={(r) => <RecipientItemComponent key={r.id} letter={letter} recipient={r} user={user} />} 
           />
         </div>
         

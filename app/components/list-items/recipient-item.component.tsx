@@ -1,10 +1,11 @@
 import { Form, useTransition } from "@remix-run/react";
 import { IoCheckmarkCircle, IoTime } from "react-icons/io5";
 import { SubmitButtonComponent } from "~/components/forms/submit-button.component";
+import { type Letter } from "~/models/letter.model";
 import { type Recipient } from "~/models/recipient.model";
 import { type User } from "~/models/user.model";
 
-export const RecipientItemComponent = ({ letterId, recipient, user }: { letterId: number; recipient: Recipient; user: User; }) => {
+export const RecipientItemComponent = ({ letter, recipient, user }: { letter: Letter; recipient: Recipient; user: User; }) => {
   const transition = useTransition();
 
   return (
@@ -32,13 +33,17 @@ export const RecipientItemComponent = ({ letterId, recipient, user }: { letterId
           }
 
           {
-            recipient.role.user.id === user.id && recipient.signedAt === null && (
+            (
+              recipient.signedAt === null && 
+              recipient.role.user.id === user.id && 
+              (recipient.level === 0 || letter.recipients.find((r) => r.level === (recipient.level - 1))?.signedAt)
+            ) && (
               <Form
                 action="sign"
                 method="post"
               >
                 <fieldset disabled={transition.state !== 'idle'}>
-                  <input name="letterId" value={letterId} type="hidden" />
+                  <input name="letterId" value={letter.id} type="hidden" />
                   <SubmitButtonComponent text="Sign letter" />
                 </fieldset>
               </Form>

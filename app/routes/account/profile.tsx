@@ -79,7 +79,7 @@ export const action: ActionFunction = async ({ request }) => {
 export default function Profile() {
   const transition = useTransition();
 
-  const { errors, user, success} = useLoaderData<LoaderData>();
+  const { errors, user, success } = useLoaderData<LoaderData>();
 
   useEffect(() => { 
     if (transition.state === 'idle' && errors.form !== undefined) { 
