@@ -39,6 +39,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 }
 
+const DataPill = ({ title, body }: { title: string; body: string | number }) => {
+  return (
+    <div className="mb-4 bg-orange-200 rounded-lg py-1 px-4">
+      <span className="font-bold">{ title }: </span>
+      <span>{ body }</span>
+    </div>
+  )
+}
+
 export default function LetterView() {
   const { letter, user } = useLoaderData<LoaderData>();
 
@@ -51,9 +60,9 @@ export default function LetterView() {
 
         <TemplateDateComponent date={letter.createdAt} />
 
-        <div className="mb-4 bg-orange-200 rounded-lg py-1 px-4 w-fit">
-          <span className="font-bold">Sent by: </span>
-          <span>{ letter.user.title } { letter.user.firstName } { letter.user.lastName }</span>
+        <div className="flex gap-4 flex-wrap">
+          <DataPill body={letter.id} title="Letter ID" />
+          <DataPill body={`${ letter.user.title ?? '' } ${ letter.user.firstName } ${ letter.user.lastName }`} title="Sent by" />
         </div>
 
         <TemplateContentComponent content={letter.template.content} />
